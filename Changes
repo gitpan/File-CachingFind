@@ -1,0 +1,9 @@
+Revision history for Perl extension File::CachingFind.
+
+0.60  Thu May  2 12:36:00 2002
+	- changed name from File::Locate to File::CachingFind
+
+
+0.50  Tue Apr  9 08:48:33 2002
+	- first public version; created by Thomas Dorner <Thomas.Dorner@start.de>
+

@@ -1,0 +1,11 @@
+Changes
+CachingFind.pm
+Makefile.PL
+MANIFEST
+README
+t/CachingFind_base.t
+t/CachingFind_link.t
+t/test.h
+t/testdir1/test.h
+t/testdir2/Test.h
+t/testdir3/test.h
