@@ -1,5 +1,6 @@
 # Before `make install' is performed this script should be runable
-# with `make test'. After `make install' it should work as `perl
+# with `make test'.  (Use `make test TEST_VERBOSE=1' if you encounter
+# any errors.)  After `make install' it should work as `perl
 # t/CachingFind_link.t'
 
 use strict;
@@ -25,27 +26,35 @@ my $test_include3 = $this_dir.'/t/testdir3/test.h';
 -l $test_include3  or  symlink $test_include1, $test_include3  or  die;
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# some functions to check the results:
+sub test_defined
+{
+    if (defined($_[1]))	{ print "ok $_[0]\n"; }
+    else		{ print "not ok $_[0]\t(undefined)\n"; }
+}
+sub test_eq
+{
+    if ($_[1] eq $_[2])	{ print "ok $_[0]\n"; }
+    else		{ print "not ok $_[0]\t('$_[1]' ne '$_[2]')\n"; }
+}
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # 2
 my $includes = File::CachingFind->new(Path => ['.'],
 				      Filter => '\.h$',
 				      NoSoftlinks => 1);
-print "not " unless defined($includes);
-print "ok 2\n";
+test_defined('2', $includes);
 
 # 3
 my $found = join(',', sort $includes->findInPath('test.h'));
-print "not " unless $found eq $test_include1.','.$test_include2;
-print "ok 3\n";
+test_eq('3', $found, $test_include1.','.$test_include2);
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # 4
 $includes = File::CachingFind->new(Path => ['.'],
 				   Filter => '\.h$');
-print "not " unless defined($includes);
-print "ok 4\n";
+test_defined('4', $includes);
 
 # 5
 $found = join(',', sort $includes->findInPath('test.h'));
-print "not " unless
-    $found eq $test_include1.','.$test_include2.','.$test_include3;
-print "ok 5\n";
+test_eq('5', $found, $test_include1.','.$test_include2.','.$test_include3);

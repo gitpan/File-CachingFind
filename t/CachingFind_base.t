@@ -7,7 +7,7 @@ use strict;
 ######################### We start with some black magic to print on failure.
 
 my $loaded;
-BEGIN { $| = 1; print "1..21\n"; }
+BEGIN { $| = 1; print "1..23\n"; }
 END {print "not ok 1\n" unless $loaded;}
 use File::CachingFind;
 $loaded = 1;
@@ -25,117 +25,121 @@ my $test_include4 = $this_dir.'/t/testdir3/test.h';
 -e $test_include4  and  unlink $test_include4;
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# some functions to check the results:
+sub test_defined
+{
+    if (defined($_[1]))	{ print "ok $_[0]\n"; }
+    else		{ print "not ok $_[0]\t(undefined)\n"; }
+}
+sub test_eq
+{
+    if ($_[1] eq $_[2])	{ print "ok $_[0]\n"; }
+    else		{ print "not ok $_[0]\t('$_[1]' ne '$_[2]')\n"; }
+}
+sub test_undefined
+{
+    if (defined($_[1]))	{ print "not ok $_[0]\t(defined)\n"; }
+    else		{ print "ok $_[0]\n"; }
+}
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # 2
 my $all = File::CachingFind->new(Path => ['.']);
-print "not " unless defined($all);
-print "ok 2\n";
+test_defined('2', $all);
 
 # 3
 my $found = join(',', $all->findInPath('MANIFEST'));
-print "$found: not " unless $found eq $this_dir.'/MANIFEST';
-print "ok 3\n";
+test_eq('3', $found, $this_dir.'/MANIFEST');
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # 4
 my $includes = File::CachingFind->new(Path => ['.'],
 				      Filter => '\.h$');
-print "not " unless defined($includes);
-print "ok 4\n";
+test_defined('4', $includes);
 
 # 5
 $found = join(',', $includes->findInPath('MANIFEST'));
-print "not " unless $found eq '';
-print "ok 5\n";
+test_eq('5', $found, '');
 
 # 6
 $found = join(',', $includes->findInPath('Test.h'));
-print "not " unless $found eq $test_include3;
-print "ok 6\n";
+test_eq('6', $found, $test_include3);
 
 # 7
 $found = join(',', sort $includes->findInPath('test.h'));
-print "not " unless $found eq $test_include1.','.$test_include2;
-print "ok 7\n";
+test_eq('7', $found, $test_include1.','.$test_include2);
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # 8
 $includes = File::CachingFind->new(Path => ['.'],
 				   Filter => '\.h$',
 				   Normalize => sub{lc @_});
-print "not " unless defined($includes);
-print "ok 8\n";
+test_defined('8', $includes);
 
 # 9
 $found = join(',', sort $includes->findInPath('test.h'));
-print "not " unless
-    $found eq $test_include1.','.$test_include2.','.$test_include3;
-print "ok 9\n";
+test_eq('9', $found, $test_include1.','.$test_include2.','.$test_include3);
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # 10
 $includes = File::CachingFind->new(Path => ['t!'],
 				   Filter => '\.h$');
-print "not " unless defined($includes);
-print "ok 10\n";
+test_defined('10', $includes);
 
 # 11
 $found = join(',', $includes->findInPath('test.h'));
-print "not " unless $found eq $test_include1;
-print "ok 11\n";
+test_eq('11', $found, $test_include1);
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # 12
 $includes = File::CachingFind->new(Path => ['t!', 't'],
 				   Filter => '\.h$');
-print "not " unless defined($includes);
-print "ok 12\n";
+test_defined('12', $includes);
 
 # 13
-$found = join(',', $includes->findInPath('test.h'));
-print "not "
-    unless $found eq $test_include1.','.$test_include1.','.$test_include2;
-print "ok 13\n";
+$found = join(',', sort $includes->findInPath('test.h'));
+test_eq('13', $found, $test_include1.','.$test_include1.','.$test_include2);
 
 # 14
 $found = $includes->findFirstInPath('MANIFEST');
-print "not " if defined $found;
-print "ok 14\n";
+test_undefined('14', $found);
 
 # 15
 $found = $includes->findFirstInPath('test.h');
-print "not " unless $found eq $test_include1;
-print "ok 15\n";
+test_eq('15', $found, $test_include1);
 
 # 16
 $found = $includes->findBestInPath('test.h',
 				   sub{ length($_[0]) <=> length($_[1]) });
-print "not " unless $found eq $test_include1;
-print "ok 16\n";
+test_eq('16', $found, $test_include1);
 
 # 17
 $found = join(',', $includes->findMatch('^T'));
-print "not " unless $found eq $test_include3;
-print "ok 17\n";
+test_eq('17', $found, $test_include3);
 
 # 18
-$found = join(',', $includes->findMatch('^t'));
-print "not "
-    unless $found eq $test_include1.','.$test_include1.','.$test_include2;
-print "ok 18\n";
+$found = join(',', sort $includes->findMatch('^t'));
+test_eq('18', $found, $test_include1.','.$test_include1.','.$test_include2);
 
 # 19
 $found = $includes->findFirstMatch('^t');
-print "not " unless $found eq $test_include1;
-print "ok 19\n";
+test_eq('19', $found, $test_include1);
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # 20
-$includes = File::CachingFind->new(Path => ['.']);
-print "not " unless defined($includes);
-print "ok 20\n";
+$all = File::CachingFind->new(Path => ['.']);
+test_defined('20', $all);
 
 # 21
-$found = $includes->findBestMatch('\.h$',
-				  sub{ length($_[0]) <=> length($_[1]) });
-print "not " unless $found eq $test_include1;
-print "ok 21\n";
+$found = $all->findBestMatch('\.h$',
+			     sub{ length($_[0]) <=> length($_[1]) });
+test_eq('21', $found, $test_include1);
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# 22
+my $none = File::CachingFind->new(Path => ['./not-existing-path']);
+test_defined('22', $none);
+
+# 23
+$found = join(',', $none->findInPath('test.h'));
+test_eq('23', $found, '');

@@ -45,7 +45,7 @@ require Exporter;
 @ISA = qw(Exporter);
 @EXPORT = qw();
 @EXPORT_OK = qw();
-$VERSION = '0.60';
+$VERSION = '0.63';
 
 use Carp;
 use Cwd 'abs_path';
@@ -172,6 +172,7 @@ sub new
     foreach (@{$newObject{Path}})
     {
 	my $recursive = ! s/!$//; # handle no-recursive flag
+	next unless -d $_;
 	_parse_directory(\%newObject, abs_path($_), $recursive, ++$priority);
     }
 
