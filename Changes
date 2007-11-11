@@ -1,5 +1,9 @@
 Revision history for Perl extension File::CachingFind.
 
+0.64  Wed Oct 31 18:43:00 2007
+	- reorganised to standard directory structure
+	- added POD and POD coverage tests
+
 0.63  Fri May 24 07:17:00 2002
 	- fixed faulty test behavior depending on the sequence of a hash
 
