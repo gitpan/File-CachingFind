@@ -45,7 +45,7 @@ require Exporter;
 @ISA = qw(Exporter);
 @EXPORT = qw();
 @EXPORT_OK = qw();
-$VERSION = '0.64';
+$VERSION = '0.65';
 
 use Carp;
 use Cwd 'abs_path';

@@ -1,5 +1,8 @@
 Revision history for Perl extension File::CachingFind.
 
+0.65  Mon Nov 19 17:34:00 2007
+	- skip CachingFind_link.t if platform has no working symlink
+
 0.64  Wed Oct 31 18:43:00 2007
 	- reorganised to standard directory structure
 	- added POD and POD coverage tests
@@ -17,4 +20,4 @@ Revision history for Perl extension File::CachingFind.
 	- changed name from File::Locate to File::CachingFind
 
 0.50  Tue Apr  9 08:48:33 2002
-	- first public version; created by Thomas Dorner <Thomas.Dorner@start.de>
+	- first public version; created by Thomas Dorner

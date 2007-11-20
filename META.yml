@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                File-CachingFind
-version:             0.64
+version:             0.65
 abstract:            find files within cached search paths (e.g. include files)
 license:             ~
 generated_by:        ExtUtils::MakeMaker version 6.36
