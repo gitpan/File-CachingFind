@@ -1,8 +1,10 @@
+Build.PL
 Changes
-lib/File/CachingFind.pm
-Makefile.PL
 MANIFEST
+Makefile.PL
+META.yml
 README
+lib/File/CachingFind.pm
 t/CachingFind_base.t
 t/CachingFind_link.t
 t/FCF-pod-coverage.t
@@ -11,4 +13,3 @@ t/test.h
 t/testdir1/test.h
 t/testdir2/Test.h
 t/testdir3/test.h
-META.yml                                 Module meta-data (added by MakeMaker)

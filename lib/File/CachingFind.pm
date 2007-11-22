@@ -36,8 +36,10 @@ and regular expressions.  See the different METHODS for details.
 
 #########################################################################
 
-require 5.000;
+require 5.006;
 use strict;
+use warnings;
+
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK);
 
 require Exporter;
@@ -45,7 +47,7 @@ require Exporter;
 @ISA = qw(Exporter);
 @EXPORT = qw();
 @EXPORT_OK = qw();
-$VERSION = '0.65';
+$VERSION = '0.66';
 
 use Carp;
 use Cwd 'abs_path';

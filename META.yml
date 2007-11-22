@@ -1,13 +1,17 @@
---- #YAML:1.0
-name:                File-CachingFind
-version:             0.65
-abstract:            find files within cached search paths (e.g. include files)
-license:             ~
-generated_by:        ExtUtils::MakeMaker version 6.36
-distribution_type:   module
-requires:     
-meta-spec:
-    url:     http://module-build.sourceforge.net/META-spec-v1.2.html
-    version: 1.2
+---
+name: File-CachingFind
+version: 0.66
 author:
-    - Thomas Dorner <dorner (AT) pause.org>
+  - 'Thomas Dorner <Thomas.Dorner@start.de> or <Thomas.Dorner@gmx.de>'
+abstract: find files within cached search paths (e.g. include files)
+license: perl
+requires:
+  perl: 5.6.0
+recommends:
+  Test::Pod: 0
+  Test::Pod::Coverage: 0
+provides:
+  File::CachingFind:
+    file: lib/File/CachingFind.pm
+    version: 0.66
+generated_by: Module::Build version 0.26
