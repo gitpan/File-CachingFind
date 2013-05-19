@@ -47,7 +47,7 @@ require Exporter;
 @ISA = qw(Exporter);
 @EXPORT = qw();
 @EXPORT_OK = qw();
-$VERSION = '0.66';
+$VERSION = '0.67';
 
 use Carp;
 use Cwd 'abs_path';
@@ -542,12 +542,20 @@ If the same file is found more than once using different paths in the
 constructor (B<new>), it will be cached more than once!  This is
 considered a feature, not a bug.
 
-=head1 AUTHOR
-
-Thomas Dorner <Thomas.Dorner@start.de> or <Thomas.Dorner@gmx.de>
-
 =head1 SEE ALSO
 
 perl(1).
+
+=head1 AUTHOR
+
+Thomas Dorner, E<lt>dorner (AT) cpan.orgE<gt>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2007-2009 by Thomas Dorner
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself, either Perl version 5.6.1 or,
+at your option, any later version of Perl 5 you may have available.
 
 =cut

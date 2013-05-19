@@ -13,3 +13,4 @@ t/test.h
 t/testdir1/test.h
 t/testdir2/Test.h
 t/testdir3/test.h
+META.json

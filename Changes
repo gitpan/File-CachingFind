@@ -1,5 +1,8 @@
 Revision history for Perl extension File::CachingFind.
 
+0.67  Sat Apr 05 17:52:00 2008
+	- hopefully fixed wrong symlink check in CachingFind_link.t
+
 0.66  Thu Nov 22 17:44:00 2007
 	- fixed LICENSE in README
 	- added "use warnings" (perl 5.6 needed!)

@@ -23,11 +23,15 @@ my $test_include2 = $this_dir.'/t/testdir1/test.h';
 my $test_include3 = $this_dir.'/t/testdir3/test.h';
 
 -d 't/testdir3'  or  mkdir 't/testdir3', 0777  or  die;
-unless (-l $test_include3  or  symlink $test_include1, $test_include3)
+unless (-l $test_include3)
 {
-    print "ok $_ # skip symlink doesn't seem to work this machine\n"
-	foreach (2..5);
-    exit 0;
+    my $symlink = eval { symlink('',''); 1 };
+    unless ($symlink  and  symlink $test_include1, $test_include3)
+    {
+	print "ok $_ # skip symlink doesn't seem to work this machine\n"
+	    foreach (2..5);
+	exit 0;
+    }
 }
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
